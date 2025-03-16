@@ -1,5 +1,5 @@
 class ConfluencePageData:
-    def __init__(self, id, space, title, contents, url, last_updated):
+    def __init__(self, id: str, space: str, title: str, contents: str, url: str, last_updated: str):
         self.id = id
         self.space = space
         self.title = title
@@ -16,3 +16,6 @@ class ConfluencePageData:
             'url': self.url,
             'last_updated': self.last_updated
         }
+
+    def __repr__(self):
+        return f'ConfluencePageData(id={self.id}, space={self.space}, title={self.title}, url={self.url})'
