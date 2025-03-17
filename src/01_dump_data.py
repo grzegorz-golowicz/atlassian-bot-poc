@@ -1,6 +1,5 @@
 import json
 from os import getenv
-from pprint import pprint
 
 from atlassian import Confluence
 from dotenv import load_dotenv
@@ -16,6 +15,9 @@ CONFLUENCE_USERNAME = getenv('CONFLUENCE_USERNAME')
 
 def get_pages_by_label(confluence: Confluence, label, start=0, limit=5):
     return confluence.get_all_pages_by_label(label=label, start=start, limit=limit)
+
+def get_pages_by_space(confluence: Confluence, space, start=0, limit=5):
+    return confluence.get_all_pages_from_space(space=space, start=start, limit=limit)
 
 
 def get_page_data(confluence: Confluence, page_id) -> ConfluencePageData:
@@ -44,6 +46,9 @@ if __name__ == '__main__':
     )
 
     pages = get_pages_by_label(confluence, 'ai-poc')
-    first_page_data = get_page_data(confluence, pages[0]['id'])
-    save_page_data_to_json(first_page_data)
-    pprint(first_page_data)
+
+    for page in pages:
+        page_data = get_page_data(confluence, page['id'])
+        save_page_data_to_json(page_data)
+        print(f'Saved page: {page_data.title} ({page_data.id})')
+
